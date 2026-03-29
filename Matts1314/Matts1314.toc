@@ -1,0 +1,18 @@
+## Interface: 120001
+## Title: Matt's 13/14
+## Notes: Matt's 13/14
+## Author: Seathasky
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\Matts1314\Media\MATT1314.png
+## SavedVariables: Matts1314DB
+## SavedVariablesPerCharacter: Matts1314DB
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0\lib.xml
+libs\LibAnimate\lib.xml
+libs\LibCustomGlow-1.0\LibCustomGlow-1.0.xml
+Main.lua
+TrinketLogic.lua
+Options.lua

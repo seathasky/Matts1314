@@ -1,0 +1,190 @@
+lightweight tag 9eb6d85c52a4d527c1b83b16d2e532f86d6fb399 1.3.15
+Author:	Joao Cardoso <jaliborc@arenajunkies.com>
+Date:	Sun Feb 8 21:02:09 2026 +0000
+
+commit 9eb6d85c52a4d527c1b83b16d2e532f86d6fb399
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Sun Feb 8 21:02:09 2026 +0000
+
+    Created tag/build workflow
+
+commit 419c3736c33db79d3047b224eb4b389e02f6aa0f
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Tue Jan 20 22:07:15 2026 +0000
+
+    Equipment set now supported on TBC servers
+
+commit 18113c8cc212e480319367079f6f2ec4e32a29e8
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Mon Jan 12 13:43:44 2026 +0000
+
+    Identation using tabs
+
+commit 625a22cc68d46cd9b0709f03561cd2bc4f744e98
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Fri Jan 2 18:26:49 2026 +0000
+
+    2026
+
+commit 8884ee122eede103ca5f8c177acdd209fff48746
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Fri Jan 2 17:39:52 2026 +0000
+
+    Now searches battlepet tooltip names, defaults to searching the link data itself if tooltip not available
+
+commit 6e6072145b40b516d1f0be6feff2cdc4468cbc61
+Author: Joao Cardoso <jaliddons@gmail.com>
+Date:   Wed Dec 31 19:52:24 2025 +0000
+
+    Added an ephemeral cache for static item tooltips
+
+commit f32c24104c92ef4034de293b89a78c9db2442395
+Author: Joao Cardoso <jaliddons@gmail.com>
+Date:   Fri Dec 19 20:40:21 2025 +0000
+
+    Now compatible with CustomSearch JIT compiler
+
+commit 75e79856d8c2d67da719bb38f357fc10e420bb56
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Thu Jul 10 22:39:31 2025 +0100
+
+    IsDressableItemByID not available on mists for some reason
+
+commit 5e5c3a243a04c1bb76b0ac6a8164b952172dacf0
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Tue Apr 15 19:41:54 2025 +0100
+
+    C_Item should use C_Everywhere just in case
+
+commit 7796709ddb619fee8c052825d21615e95c483a48
+Author: Joao Cardoso <jaliddons@gmail.com>
+Date:   Tue Apr 15 19:36:16 2025 +0100
+
+    Now uses Enum.ItemBind; updated tags to match documentation
+
+commit c12a7b4d8c1f2b9c1dd22e335f944cab003f0427
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Sun Jan 12 18:56:26 2025 +0000
+
+    Updated year
+
+commit a8f7c673d10e1faf7c3b25ce984185cbc7ac0449
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Fri Nov 22 21:50:04 2024 +0000
+
+    Bugfix with .GetHyperlink
+
+commit dc6d7c42387a5f6efd23629bb9e8e65de1785e80
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Tue Sep 3 19:51:05 2024 +0100
+
+    Improved :IsUncollected
+
+commit 1688d2a1f3dc6ff3f2d1b37bd30acf8db1efcc15
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Sat Aug 24 13:13:51 2024 +0100
+
+    Added :IsUncollected
+
+commit d469816673432d6912d7fcf9dd5583898b8d16ad
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed Aug 21 15:46:03 2024 +0100
+
+    Check DoesItemExist before GetItemLink
+
+commit 07c0aaee7a3bbfe389246dde8f13fbf8e6aa57e9
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed Aug 14 12:00:27 2024 +0100
+
+    Updated for WoW 11.0.2
+
+commit 881f91480068ebbd19c1629fbf9ab8ad681d018d
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Sat Jan 6 14:51:01 2024 +0000
+
+    Year update
+
+commit 2b132b2e8bb5300c494d269be63c75f80c619891
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed Nov 22 19:49:27 2023 +0000
+
+    Updated for C_Addons
+
+commit 6507ab19c18de2df52a515e8ffe9f052ed6e4527
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed May 3 20:55:41 2023 +0200
+
+    Actual 10,1 update, previous commit was missing some changes
+
+commit 3f949a9d0ed5dbf062c330b798ee353a4a666d2f
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed May 3 20:28:42 2023 +0200
+
+    Updated for WoW patch 10.1
+
+commit c7336ce4f9fb7f74fde6771815cf18376ba17e4a
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Sat Mar 25 21:49:34 2023 +0100
+
+    Bugfixes regarding item level search
+
+commit 592ecb61d3190e5eee9d2a44688a4c076234688f
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Wed Dec 14 16:22:11 2022 +0100
+
+    Search by expansion possible everywhere
+
+commit b9f651950f0c02c9e448873c79ec0bd574f0cc1b
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Fri Dec 9 02:20:43 2022 +0100
+
+    Wardrobe was reported to be unmaintained, removing support
+
+commit 1576028ff39dc9bf6d52d37a2a8a8433494c2228
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Fri Dec 9 02:03:27 2022 +0100
+
+    Working version
+
+commit 5162a789cdaf9ba6c575006eadaaf9a6d2283ea0
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Thu Dec 8 19:58:28 2022 +0100
+
+    Finished implementing redesigned library
+
+commit 7e23dc9608176103bf735ca49aa802eeffd22eaa
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Tue Dec 6 23:47:29 2022 +0100
+
+    drafting ideas
+
+commit 02f4af944d0b0f09d0a0d680d083cb6b34c64b32
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Thu Mar 24 00:42:22 2022 +0000
+
+    Updated unit tests correspondigly
+
+commit a828a85a639eafb7cca1459f6303728e03180058
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Thu Mar 24 00:41:22 2022 +0000
+
+    v24: fixed issue with azerite API introduced in burning crusade patch
+
+commit 7dd535e6ab0f172981a7c7215c836d718bae9789
+Author: Chad Martin <martin.thechad@gmail.com>
+Date:   Tue Mar 22 14:03:38 2022 -0700
+
+    Add check for C_CurrencyInfo.GetAzeriteCurrencyID before use
+
+commit 7dd535e6ab0f172981a7c7215c836d718bae9789
+Author: Chad Martin <martin.thechad@gmail.com>
+Date:   Tue Mar 22 14:03:38 2022 -0700
+
+    Add check for C_CurrencyInfo.GetAzeriteCurrencyID before use
+
+commit 282dd2646f23265bf58ceb42681f2fd41197941f
+Author: Joao Cardoso <jaliborc@arenajunkies.com>
+Date:   Thu Dec 2 20:24:33 2021 +0100
+
+    Replaced deprecated LE_ITEM constants with Enum.
+
