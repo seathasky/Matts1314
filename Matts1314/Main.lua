@@ -5,7 +5,7 @@ Matts1314DB = Matts1314DB or {
   onlyShowInCombat = false,
   onlyShowWhenAvailable = false,
   glowWhenReady = true,
-  bounceWhenReady = true,
+  bounceWhenReady = false,
   playSoundWhenReady = true,
   layout = "vertical",
   iconSize = 44,
@@ -34,7 +34,7 @@ if Matts1314DB.glowWhenReady == nil then
   Matts1314DB.glowWhenReady = true
 end
 if Matts1314DB.bounceWhenReady == nil then
-  Matts1314DB.bounceWhenReady = true
+  Matts1314DB.bounceWhenReady = false
 end
 if Matts1314DB.playSoundWhenReady == nil then
   Matts1314DB.playSoundWhenReady = true
@@ -137,6 +137,16 @@ local function ApplyCenterPosition(frame, x, y)
   frame:SetPoint("CENTER", UIParent, "CENTER", x or 0, y or 0)
 end
 
+local function SanitizeNumber(value, fallback)
+  if type(value) ~= "number" then
+    return fallback
+  end
+  if value ~= value then
+    return fallback
+  end
+  return value
+end
+
 local function GetPrimaryGroupIcon()
   if Matts1314DB.layout == "horizontal" then
     return trinket2 -- left icon
@@ -215,6 +225,18 @@ dragDriver:SetScript("OnUpdate", function()
   local newX = activeDrag.startX + (cursorX - activeDrag.cursorStartX)
   local newY = activeDrag.startY + (cursorY - activeDrag.cursorStartY)
   ApplyCenterPosition(activeDrag.target, newX, newY)
+
+  if activeDrag.target == container then
+    Matts1314DB.x = newX
+    Matts1314DB.y = newY
+  elseif activeDrag.target == trinket1 or activeDrag.target == trinket2 then
+    local layoutName = Matts1314.activeLayoutName or "default"
+    local layout = EnsureIconLayout(layoutName)
+    local key = (activeDrag.target == trinket1) and "slot13" or "slot14"
+    layout[key].point = "CENTER"
+    layout[key].x = newX
+    layout[key].y = newY
+  end
 end)
 
 local function InstallMoveHandlers(frame)
@@ -289,7 +311,7 @@ SaveContainerPosition = function()
 end
 
 SaveIconPosition = function(frame)
-  local layoutName = "default"
+  local layoutName = Matts1314.activeLayoutName or "default"
   local layout = EnsureIconLayout(layoutName)
   local key = (frame == trinket1) and "slot13" or "slot14"
   local x, y = SaveCenterPosition(frame)
@@ -299,6 +321,26 @@ SaveIconPosition = function(frame)
   ApplyCenterPosition(frame, x, y)
   UpdateTrinketLayout()
   UpdateTrinkets()
+end
+
+local function PersistCurrentPositions()
+  if Matts1314DB.separateEditModeIcons then
+    local layoutName = Matts1314.activeLayoutName or "default"
+    local layout = EnsureIconLayout(layoutName)
+    local x13, y13 = SaveCenterPosition(trinket1)
+    local x14, y14 = SaveCenterPosition(trinket2)
+    layout.slot13.point = "CENTER"
+    layout.slot13.x = x13
+    layout.slot13.y = y13
+    layout.slot14.point = "CENTER"
+    layout.slot14.x = x14
+    layout.slot14.y = y14
+    return
+  end
+
+  local x, y = SaveCenterPosition(container)
+  Matts1314DB.x = x
+  Matts1314DB.y = y
 end
 
 local editOverlay = CreateFrame("Frame", "Matts1314EditOverlay", UIParent, BackdropTemplateMixin and "BackdropTemplate")
@@ -544,17 +586,33 @@ RefreshMoveMouseRouting()
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+eventFrame:RegisterEvent("PLAYER_LOGOUT")
 eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 eventFrame:RegisterEvent("BAG_UPDATE_COOLDOWN")
 eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
+  if event == "PLAYER_LOGOUT" then
+    PersistCurrentPositions()
+    return
+  end
+
   if event == "PLAYER_LOGIN" then
+    Matts1314DB.x = SanitizeNumber(Matts1314DB.x, 0)
+    Matts1314DB.y = SanitizeNumber(Matts1314DB.y, 0)
+    ApplyCenterPosition(container, Matts1314DB.x, Matts1314DB.y)
     EnsureIconLayout("default")
     UpdateLayout()
     UpdateSizes()
     RefreshMoveMouseRouting()
+    C_Timer.After(0, function()
+      ApplyCenterPosition(container, Matts1314DB.x or 0, Matts1314DB.y or 0)
+      UpdateLayout()
+    end)
     C_Timer.After(0.5, UpdateTrinkets)
+  elseif event == "PLAYER_ENTERING_WORLD" then
+    ApplyCenterPosition(container, Matts1314DB.x or 0, Matts1314DB.y or 0)
+    UpdateLayout()
   elseif event == "PLAYER_REGEN_DISABLED" and Matts1314.editModeActive then
     Matts1314.ExitCustomEditMode()
   end
@@ -575,6 +633,17 @@ end
 local LDB = LibStub("LibDataBroker-1.1", true)
 local LDBIcon = LibStub("LibDBIcon-1.0", true)
 if LDB and LDBIcon then
+  Matts1314.LDBIcon = LDBIcon
+
+  function Matts1314.UpdateMinimapIconVisibility()
+    Matts1314DB.minimap = Matts1314DB.minimap or { hide = false }
+    if Matts1314DB.minimap.hide then
+      LDBIcon:Hide("Matts1314")
+    else
+      LDBIcon:Show("Matts1314")
+    end
+  end
+
   Matts1314.LDB = LDB:NewDataObject("Matts1314", {
     type = "launcher",
     text = "Matts1314",
@@ -600,6 +669,7 @@ if LDB and LDBIcon then
   })
 
   LDBIcon:Register("Matts1314", Matts1314.LDB, Matts1314DB.minimap)
+  Matts1314.UpdateMinimapIconVisibility()
 end
 
 local Masque = LibStub("Masque", true)

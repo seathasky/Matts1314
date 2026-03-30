@@ -119,15 +119,16 @@ panel:SetScript("OnDragStop", panel.StopMovingOrSizing)
 
 local tabBar = CreateFrame("Frame", nil, panel)
 tabBar:SetPoint("TOP", panel, "TOP", 0, -102)
-tabBar:SetSize(352, 24)
+tabBar:SetSize(442, 24)
 
 local generalTab = CreateFrame("Button", nil, tabBar, "BackdropTemplate")
 generalTab:SetPoint("LEFT", tabBar, "LEFT", 0, 0)
 generalTab:SetSize(82, 22)
 StyleFlatButton(generalTab)
+generalTab._labelText = "General"
 generalTab.label = generalTab:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 generalTab.label:SetPoint("CENTER")
-generalTab.label:SetText("General")
+generalTab.label:SetText(generalTab._labelText)
 generalTab.label:SetWidth(78)
 ApplyFont(generalTab.label, 13, "")
 generalTab.label:SetTextColor(0.90, 0.95, 1.00)
@@ -136,9 +137,10 @@ local displayTab = CreateFrame("Button", nil, tabBar, "BackdropTemplate")
 displayTab:SetPoint("LEFT", generalTab, "RIGHT", 8, 0)
 displayTab:SetSize(82, 22)
 StyleFlatButton(displayTab)
+displayTab._labelText = "Display"
 displayTab.label = displayTab:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 displayTab.label:SetPoint("CENTER")
-displayTab.label:SetText("Display")
+displayTab.label:SetText(displayTab._labelText)
 displayTab.label:SetWidth(78)
 ApplyFont(displayTab.label, 13, "")
 displayTab.label:SetTextColor(0.90, 0.95, 1.00)
@@ -147,9 +149,10 @@ local blacklistTab = CreateFrame("Button", nil, tabBar, "BackdropTemplate")
 blacklistTab:SetPoint("LEFT", displayTab, "RIGHT", 8, 0)
 blacklistTab:SetSize(82, 22)
 StyleFlatButton(blacklistTab)
+blacklistTab._labelText = "Blacklist"
 blacklistTab.label = blacklistTab:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 blacklistTab.label:SetPoint("CENTER")
-blacklistTab.label:SetText("Blacklist")
+blacklistTab.label:SetText(blacklistTab._labelText)
 blacklistTab.label:SetWidth(78)
 ApplyFont(blacklistTab.label, 13, "")
 blacklistTab.label:SetTextColor(0.90, 0.95, 1.00)
@@ -158,12 +161,25 @@ local editModeTab = CreateFrame("Button", nil, tabBar, "BackdropTemplate")
 editModeTab:SetPoint("LEFT", blacklistTab, "RIGHT", 8, 0)
 editModeTab:SetSize(82, 22)
 StyleFlatButton(editModeTab)
+editModeTab._labelText = "Edit Mode"
 editModeTab.label = editModeTab:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 editModeTab.label:SetPoint("CENTER")
-editModeTab.label:SetText("Edit Mode")
+editModeTab.label:SetText(editModeTab._labelText)
 editModeTab.label:SetWidth(78)
 ApplyFont(editModeTab.label, 13, "")
 editModeTab.label:SetTextColor(0.90, 0.95, 1.00)
+
+local systemTab = CreateFrame("Button", nil, tabBar, "BackdropTemplate")
+systemTab:SetPoint("LEFT", editModeTab, "RIGHT", 8, 0)
+systemTab:SetSize(82, 22)
+StyleFlatButton(systemTab)
+systemTab._labelText = "System"
+systemTab.label = systemTab:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+systemTab.label:SetPoint("CENTER")
+systemTab.label:SetText(systemTab._labelText)
+systemTab.label:SetWidth(78)
+ApplyFont(systemTab.label, 13, "")
+systemTab.label:SetTextColor(0.90, 0.95, 1.00)
 
 local content = CreateFrame("Frame", nil, panel)
 content:SetPoint("TOPLEFT", panel, "TOPLEFT", 24, -166)
@@ -193,6 +209,10 @@ displayPage:Hide()
 local blacklistPage = CreateFrame("Frame", nil, content)
 blacklistPage:SetAllPoints(content)
 blacklistPage:Hide()
+
+local systemPage = CreateFrame("Frame", nil, content)
+systemPage:SetAllPoints(content)
+systemPage:Hide()
 
 local TAB_COLORS = {
   activeBg = { 0.14, 0.24, 0.18, 1.0 },
@@ -259,6 +279,21 @@ InitTabVisuals(generalTab)
 InitTabVisuals(displayTab)
 InitTabVisuals(blacklistTab)
 InitTabVisuals(editModeTab)
+InitTabVisuals(systemTab)
+
+local function RefreshTabLabels()
+  for _, tab in ipairs({ generalTab, displayTab, blacklistTab, editModeTab, systemTab }) do
+    if tab.label then
+      tab.label:SetText(tab._labelText or "")
+      tab.label:SetShown(true)
+      tab.label:SetAlpha(1)
+      tab.label:SetWidth(78)
+      tab.label:SetHeight(14)
+      ApplyFont(tab.label, 13, "")
+    end
+    ApplyTabVisual(tab)
+  end
+end
 
 local selectedSuggestionItemID
 local suggestionButtons = {}
@@ -322,6 +357,30 @@ local fontStyleCheck = CreateCheck(
   function(v)
     Matts1314DB.useCustomFont = v
     RefreshFonts()
+  end
+)
+
+local systemHeading = systemPage:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+systemHeading:SetPoint("TOPLEFT", 4, -4)
+systemHeading:SetText("System")
+ApplyFont(systemHeading, 14, "")
+systemHeading:SetTextColor(0.85, 0.92, 1.00)
+
+local minimapCheck = CreateCheck(
+  systemPage,
+  12,
+  -40,
+  "Hide minimap button",
+  function()
+    Matts1314DB.minimap = Matts1314DB.minimap or { hide = false }
+    return Matts1314DB.minimap.hide == true
+  end,
+  function(v)
+    Matts1314DB.minimap = Matts1314DB.minimap or { hide = false }
+    Matts1314DB.minimap.hide = v and true or false
+    if Matts1314 and Matts1314.UpdateMinimapIconVisibility then
+      Matts1314.UpdateMinimapIconVisibility()
+    end
   end
 )
 
@@ -993,10 +1052,12 @@ local function ShowPage(page)
   generalPage:SetShown(page == "general")
   displayPage:SetShown(page == "display")
   blacklistPage:SetShown(page == "blacklist")
+  systemPage:SetShown(page == "system")
   SetTabActive(generalTab, page == "general")
   SetTabActive(displayTab, page == "display")
   SetTabActive(blacklistTab, page == "blacklist")
   SetTabActive(editModeTab, false)
+  SetTabActive(systemTab, page == "system")
   Matts1314DB.optionsTab = page
 
   layoutMenu:Hide()
@@ -1028,6 +1089,10 @@ editModeTab:SetScript("OnClick", function()
   end
 end)
 
+systemTab:SetScript("OnClick", function()
+  ShowPage("system")
+end)
+
 UpdateBlacklistDisplay()
 SLASH_MATTS13141 = "/m1314"
 SLASH_MATTS13143 = "/matts1314"
@@ -1039,10 +1104,7 @@ panel:SetScript("OnShow", function()
   panel:SetFrameStrata("DIALOG")
   panel:SetFrameLevel(200)
   panel:Raise()
-  generalTab.label:SetText("General")
-  displayTab.label:SetText("Display")
-  blacklistTab.label:SetText("Blacklist")
-  editModeTab.label:SetText("Edit Mode")
+  RefreshTabLabels()
   onUseCheck:SetChecked(Matts1314DB.onlyShowOnUseTrinkets)
   inCombatCheck:SetChecked(Matts1314DB.onlyShowInCombat)
   availableCheck:SetChecked(Matts1314DB.onlyShowWhenAvailable)
@@ -1051,10 +1113,13 @@ panel:SetScript("OnShow", function()
   soundReadyCheck:SetChecked(Matts1314DB.playSoundWhenReady ~= false)
   separateEditIconsCheck:SetChecked(Matts1314DB.separateEditModeIcons)
   fontStyleCheck:SetChecked(Matts1314DB.useCustomFont ~= false)
+  Matts1314DB.minimap = Matts1314DB.minimap or { hide = false }
+  minimapCheck:SetChecked(Matts1314DB.minimap.hide == true)
   sizeSlider:SetValue(Matts1314DB.iconSize)
   SetLayoutValue(Matts1314DB.layout or "vertical")
   RefreshFonts()
 
   selectedSuggestionItemID = nil
   ShowPage(Matts1314DB.optionsTab or "general")
+  C_Timer.After(0, RefreshTabLabels)
 end)
