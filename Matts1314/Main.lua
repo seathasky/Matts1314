@@ -289,16 +289,25 @@ end
 
 local function RefreshMoveMouseRouting()
   local separate = Matts1314DB.separateEditModeIcons == true
+  local inEditMode = Matts1314.editModeActive == true
+
+  if not inEditMode then
+    container:EnableMouse(false)
+    trinket1:EnableMouse(false)
+    trinket2:EnableMouse(false)
+    return
+  end
 
   if separate then
     container:EnableMouse(true)
     trinket1:EnableMouse(true)
     trinket2:EnableMouse(true)
-  else
-    container:EnableMouse(true)
-    trinket1:EnableMouse(true)
-    trinket2:EnableMouse(true)
+    return
   end
+
+  container:EnableMouse(true)
+  trinket1:EnableMouse(true)
+  trinket2:EnableMouse(true)
 end
 
 SaveContainerPosition = function()

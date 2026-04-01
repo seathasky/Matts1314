@@ -2,7 +2,7 @@
 ## Title: Matt's 13/14
 ## Notes: Matt's 13/14
 ## Author: Seathasky
-## Version: 1.0.1
+## Version: 1.0.2
 ## IconTexture: Interface\AddOns\Matts1314\Media\MATT1314.png
 ## SavedVariables: Matts1314DB
 
