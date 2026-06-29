@@ -456,9 +456,6 @@ sizeSlider:SetScript("OnValueChanged", function(_, value)
   Matts1314DB.iconSize = value
   sizeLabel:SetText("Icon Size: " .. value)
   UpdateSizes()
-  if Matts1314.MSQ_Group then
-    Matts1314.MSQ_Group:ReSkin()
-  end
 end)
 
 local layoutLabel = displayPage:CreateFontString(nil, "OVERLAY", "GameFontNormal")

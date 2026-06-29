@@ -514,9 +514,6 @@ editScaleSlider:SetScript("OnValueChanged", function(_, value)
   UpdateSizes()
   UpdateLayout()
   UpdateTrinkets()
-  if Matts1314.MSQ_Group then
-    Matts1314.MSQ_Group:ReSkin()
-  end
 end)
 
 editFlipCheck:SetScript("OnClick", function(self)
@@ -628,17 +625,6 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
   UpdateTrinkets()
 end)
 
--- Added Masque Support --
-
-local function GetMasqueData(button)
-  return {
-    Icon = button.icon,
-    Cooldown = button.cooldown,
-    Border = button.border,
-    Count = button.count,
-  }
-end
-
 local LDB = LibStub("LibDataBroker-1.1", true)
 local LDBIcon = LibStub("LibDBIcon-1.0", true)
 if LDB and LDBIcon then
@@ -679,20 +665,6 @@ if LDB and LDBIcon then
 
   LDBIcon:Register("Matts1314", Matts1314.LDB, Matts1314DB.minimap)
   Matts1314.UpdateMinimapIconVisibility()
-end
-
-local Masque = LibStub("Masque", true)
-if Masque then
-  Matts1314.MSQ_Group = Masque:Group("Matts1314")
-  Matts1314.MSQ_Group:AddButton(trinket1, GetMasqueData(trinket1))
-  Matts1314.MSQ_Group:AddButton(trinket2, GetMasqueData(trinket2))
-  Matts1314.MSQ_Group:RegisterCallback(function()
-    local size = Matts1314DB.iconSize
-    if size then
-      trinket1:SetSize(size, size)
-      trinket2:SetSize(size, size)
-    end
-  end)
 end
 
 C_Timer.After(1, function()
