@@ -238,7 +238,7 @@ function IsOnUseTrinket(slotID)
     end
   end
 
-  local spellName, spellID = GetItemSpell(itemID)
+  local spellName = C_Item.GetItemSpell(itemID)
   if spellName then
     return true
   end
